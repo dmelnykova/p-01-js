@@ -1,4 +1,4 @@
-// Создаем массив книг с фиктивными данными
+// 
 const books = [
   {
     title: 'Book 1',
@@ -56,21 +56,19 @@ const books = [
     description: 'Description of Book 2',
     },
   
-  // Добавьте данные о других книгах по аналогии
 ];
 
+////
 const booksPerPage = 2;
 
-// Функция для отображения книг на определенной странице
 function displayBooks(pageNumber) {
   const startIndex = (pageNumber - 1) * booksPerPage;
   const endIndex = startIndex + booksPerPage;
   const booksToDisplay = books.slice(startIndex, endIndex);
 
   const bookListElement = document.getElementById('bookList');
-  bookListElement.innerHTML = '';  // Очищаем содержимое блока с книгами
+  bookListElement.innerHTML = '';  
 
-  // Отображаем каждую книгу
   booksToDisplay.forEach(book => {
     const bookCard = document.createElement('div');
     bookCard.classList.add('book-card');
@@ -83,10 +81,9 @@ function displayBooks(pageNumber) {
   });
 }
 
-// Функция для отображения пагинации
 function displayPagination(totalPages) {
   const pageNumbersElement = document.getElementById('pageNumbers');
-  pageNumbersElement.innerHTML = ''; // Очищаем содержимое блока с пагинацией
+  pageNumbersElement.innerHTML = ''; 
 
   for (let i = 1; i <= totalPages; i++) {
     const pageButton = document.createElement('button');
@@ -98,24 +95,24 @@ function displayPagination(totalPages) {
   }
 }
 
-// Функция для перехода к первой странице
+// first
 function goToFirstPage() {
   displayBooks(1);
 }
 
-// Функция для перехода к последней странице
+// last
 function goToLastPage() {
   displayBooks(totalPages);
 }
 
-// Рассчитываем общее количество страниц
+// total
 const totalPages = Math.ceil(books.length / booksPerPage);
 
-// Отображаем первую страницу книг и пагинацию
+// display
 displayBooks(1);
 displayPagination(totalPages);
 
-// Обработчики событий для кнопок "<<" (первая страница) и ">>" (последняя страница)
+// "<<" and ">>" 
 const firstPageButton = document.getElementById('firstPage');
 const prevPageButton = document.getElementById('prevPage');
 const nextPageButton = document.getElementById('nextPage');

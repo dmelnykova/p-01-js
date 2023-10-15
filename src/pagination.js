@@ -1,4 +1,3 @@
-// 
 const books = [
   {
     title: 'Book 1',
@@ -9,65 +8,70 @@ const books = [
     title: 'Book 2',
     author: 'Author 2',
     description: 'Description of Book 2',
-    },
-   {
+  },
+  {
     title: 'Book 3',
     author: 'Author 2',
     description: 'Description of Book 2',
-    },
-    {
+  },
+  {
     title: 'Book 4',
     author: 'Author 2',
     description: 'Description of Book 2',
-    },
-     {
+  },
+  {
     title: 'Book 5',
     author: 'Author 2',
     description: 'Description of Book 2',
-    },
-      {
-    title: 'Book 2',
-    author: 'Author 2',
-    description: 'Description of Book 2',
-    },
-       {
+  },
+  {
     title: 'Book 6',
     author: 'Author 2',
     description: 'Description of Book 2',
-    },
-        {
+  },
+  {
     title: 'Book 7',
     author: 'Author 2',
     description: 'Description of Book 2',
-    },
-      {
+  },
+  {
     title: 'Book 8',
     author: 'Author 2',
     description: 'Description of Book 2',
-    },
-        {
+  },
+  {
     title: 'Book 9',
     author: 'Author 2',
     description: 'Description of Book 2',
-    },
-        {
-    title: 'Book 9',
+  },
+  {
+    title: 'Book 10',
+    author: 'Author 2',
+    description: 'Description of Book 2',
+  },
+  {
+    title: 'Book 11',
     author: 'Author 2',
     description: 'Description of Book 2',
     },
-  
 ];
 
-////
-const booksPerPage = 2;
+const booksPerPage = 4;  // Змінено кількість книг на сторінці
+let currentPage = 1;
+const totalPages = Math.ceil(books.length / booksPerPage);
+
+function getCurrentPage() {
+  const activeButton = document.querySelector('.pagination-button.active');
+  return parseInt(activeButton.innerText, 10);
+}
 
 function displayBooks(pageNumber) {
   const startIndex = (pageNumber - 1) * booksPerPage;
-  const endIndex = startIndex + booksPerPage;
+  const endIndex = Math.min(startIndex + booksPerPage, books.length);
   const booksToDisplay = books.slice(startIndex, endIndex);
 
   const bookListElement = document.getElementById('bookList');
-  bookListElement.innerHTML = '';  
+  bookListElement.innerHTML = '';
 
   booksToDisplay.forEach(book => {
     const bookCard = document.createElement('div');
@@ -83,52 +87,65 @@ function displayBooks(pageNumber) {
 
 function displayPagination(totalPages) {
   const pageNumbersElement = document.getElementById('pageNumbers');
-  pageNumbersElement.innerHTML = ''; 
+  pageNumbersElement.innerHTML = '';
 
   for (let i = 1; i <= totalPages; i++) {
     const pageButton = document.createElement('button');
     pageButton.innerText = i;
+    pageButton.classList.add('pagination-button');
     pageButton.addEventListener('click', () => {
-      displayBooks(i);
+      currentPage = i;
+      displayBooks(currentPage);
+      updatePaginationButtons();
     });
     pageNumbersElement.appendChild(pageButton);
   }
 }
 
-// first
-function goToFirstPage() {
-  displayBooks(1);
+function updatePaginationButtons() {
+  const paginationButtons = document.querySelectorAll('.pagination-button');
+  paginationButtons.forEach(button => {
+    button.classList.remove('active');
+    if (parseInt(button.innerText, 10) === currentPage) {
+      button.classList.add('active');
+    }
+  });
 }
 
-// last
-function goToLastPage() {
-  displayBooks(totalPages);
-}
-
-// total
-const totalPages = Math.ceil(books.length / booksPerPage);
-
-// display
-displayBooks(1);
-displayPagination(totalPages);
-
-// "<<" and ">>" 
 const firstPageButton = document.getElementById('firstPage');
 const prevPageButton = document.getElementById('prevPage');
 const nextPageButton = document.getElementById('nextPage');
 const lastPageButton = document.getElementById('lastPage');
 
+function goToFirstPage() {
+  currentPage = 1;
+  displayBooks(currentPage);
+  updatePaginationButtons();
+}
+
+function goToLastPage() {
+  currentPage = totalPages;
+  displayBooks(currentPage);
+  updatePaginationButtons();
+}
+
 firstPageButton.addEventListener('click', goToFirstPage);
 prevPageButton.addEventListener('click', () => {
-  const currentPage = getCurrentPage();
   if (currentPage > 1) {
-    displayBooks(currentPage - 1);
+    currentPage--;
+    displayBooks(currentPage);
+    updatePaginationButtons();
   }
 });
 nextPageButton.addEventListener('click', () => {
-  const currentPage = getCurrentPage();
   if (currentPage < totalPages) {
-    displayBooks(currentPage + 1);
+    currentPage++;
+    displayBooks(currentPage);
+    updatePaginationButtons();
   }
 });
 lastPageButton.addEventListener('click', goToLastPage);
+
+displayBooks(currentPage);
+displayPagination(totalPages);
+updatePaginationButtons();

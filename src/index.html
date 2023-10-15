@@ -10,12 +10,12 @@
 
 <body>
   <div id="bookList"></div>
-  <div id="pagination">
-    <button id="firstPage">First</button>
-    <button id="prevPage">Previous</button>
-    <div id="pageNumbers"></div>
-    <button id="nextPage">Next</button>
-    <button id="lastPage">Last</button>
+  <div class="pagination">
+    <button id="firstPage" onclick="goToFirstPage()" class="btn-first"> &laquo;&laquo; </button>
+    <button id="prevPage" onclick="prevPage()" class="btn-first"> &laquo; </button>
+    <div id="pageNumbers" class="numbers"></div>
+    <button id="nextPage" onclick="nextPage()" class="btn-last"> &raquo; </button>
+    <button id="lastPage" onclick="goToLastPage()" class="btn-last"> &raquo;&raquo; </button>
   </div>
 
   <script type="module" src="./pagination.js"></script>
